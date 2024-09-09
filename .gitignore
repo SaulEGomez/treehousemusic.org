@@ -75,3 +75,6 @@ yarn.lock
 
 # dev
 todo.md
+
+#Include environment variable .env.local
+.env.local
