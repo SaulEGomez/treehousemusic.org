@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "title": "HULL – Shopify Starter",
-  "description": "Headless Shopify starter powered by Next.js + Sanity.io",
+  "title": "treehousemusic by Marwan Nassar",
+  "description": "Marwan Nassar's private tutoring and education site",
   "previewMedia": {
     "type": "image",
-    "src": ".sanity-template/assets/HULL-cover.png",
-    "alt": "HULL"
+    "src": ".sanity-template/assets/UnmodifiedTHM.png",
+    "alt": "treehousemusic"
   },
   "technologies": [
     {
@@ -17,11 +17,6 @@
       "id": "vercel",
       "name": "Vercel",
       "url": "https://vercel.com/"
-    },
-    {
-      "id": "shopify",
-      "name": "Shopify",
-      "url": "https://shopify.com/"
     }
   ],
   "deployment": {

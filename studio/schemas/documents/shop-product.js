@@ -1,5 +1,5 @@
 import React from 'react'
-import { Gift, CloudArrowDown, ArrowsClockwise } from 'phosphor-react'
+import { Gift } from 'phosphor-react'
 
 import { getIcon } from './filter'
 
@@ -11,8 +11,7 @@ export default {
   groups: [
     { title: 'Content', name: 'content', default: true },
     { title: 'Photos', name: 'photos' },
-    { title: 'Settings', name: 'settings' },
-    { title: 'Shopify Data', name: 'shopify', icon: CloudArrowDown }
+    { title: 'Settings', name: 'settings' }
   ],
   fieldsets: [
     {
@@ -207,106 +206,6 @@ export default {
       name: 'seo',
       type: 'seo',
       group: 'settings'
-    },
-    {
-      name: 'shopifyNote',
-      type: 'note',
-      options: {
-        icon: ArrowsClockwise,
-        message:
-          'This data is automatically pulled in from your connected Shopify account. To make changes to this data please edit the product on Shopify directly.'
-      },
-      group: 'shopify'
-    },
-    {
-      title: 'Product Title',
-      name: 'productTitle',
-      type: 'string',
-      readOnly: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'Product ID',
-      name: 'productID',
-      type: 'number',
-      readOnly: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'Price (cents)',
-      name: 'price',
-      type: 'number',
-      readOnly: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'Compare Price (cents)',
-      name: 'comparePrice',
-      type: 'number',
-      readOnly: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'In Stock?',
-      name: 'inStock',
-      type: 'boolean',
-      readOnly: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'Low Stock?',
-      name: 'lowStock',
-      type: 'boolean',
-      readOnly: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'SKU',
-      name: 'sku',
-      type: 'string',
-      readOnly: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'URL Slug',
-      name: 'slug',
-      type: 'slug',
-      readOnly: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'Options',
-      name: 'options',
-      type: 'array',
-      of: [{ type: 'productOption' }],
-      readOnly: true,
-      group: 'shopify'
-    },
-    {
-      title: 'Draft Mode',
-      name: 'isDraft',
-      type: 'boolean',
-      readOnly: true,
-      hidden: true,
-      fieldset: '2up',
-      group: 'shopify'
-    },
-    {
-      title: 'Deleted from Shopify?',
-      name: 'wasDeleted',
-      type: 'boolean',
-      readOnly: true,
-      hidden: true,
-      fieldset: '2up',
-      group: 'shopify'
     }
   ],
   initialValue: {
