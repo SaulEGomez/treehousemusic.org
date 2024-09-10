@@ -7,17 +7,13 @@ export default {
   name: 'product',
   title: 'Product',
   type: 'document',
-  __experimental_actions: ['update', 'publish', 'delete'],
-  groups: [
-    { title: 'Content', name: 'content', default: true },
-    { title: 'Photos', name: 'photos' },
-    { title: 'Settings', name: 'settings' }
-  ],
+  __experimental_actions: ['update', 'publish', 'delete'], // disable for initial publish
   fieldsets: [
     {
-      title: '',
-      name: '2up',
-      options: { columns: 2 }
+      title: 'Shopify',
+      name: 'shopify',
+      description: 'Synced from Shopify',
+      options: { columns: 2, collapsible: true }
     },
     {
       title: 'Product Cards',
@@ -30,61 +26,109 @@ export default {
   icon: () => <Gift />,
   fields: [
     {
+      title: 'Product Title',
+      name: 'productTitle',
+      type: 'string',
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'Product ID',
+      name: 'productID',
+      type: 'number',
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'Price (cents)',
+      name: 'price',
+      type: 'number',
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'Compare Price (cents)',
+      name: 'comparePrice',
+      type: 'number',
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'In Stock?',
+      name: 'inStock',
+      type: 'boolean',
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'Low Stock?',
+      name: 'lowStock',
+      type: 'boolean',
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'SKU',
+      name: 'sku',
+      type: 'string',
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'URL Slug',
+      name: 'slug',
+      type: 'slug',
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'Options',
+      name: 'options',
+      type: 'array',
+      of: [{ type: 'productOption' }],
+      readOnly: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'Draft Mode',
+      name: 'isDraft',
+      type: 'boolean',
+      readOnly: true,
+      hidden: true,
+      fieldset: 'shopify'
+    },
+    {
+      title: 'Deleted from Shopify?',
+      name: 'wasDeleted',
+      type: 'boolean',
+      readOnly: true,
+      hidden: true,
+      fieldset: 'shopify'
+    },
+    {
       title: 'Display Title',
       name: 'title',
-      type: 'string',
-      group: 'content'
+      type: 'string'
     },
     {
       title: 'Description',
       name: 'description',
-      type: 'simplePortableText',
-      group: 'content'
+      type: 'simplePortableText'
     },
     {
-      title: 'Overlay header with transparency?',
-      name: 'hasTransparentHeader',
-      type: 'boolean',
+      title: 'Gallery',
+      name: 'galleryPhotos',
+      type: 'array',
+      of: [{ type: 'productGalleryPhotos' }],
       description:
-        'When activated the header will overlay the first content module with a transparent background and white text until scrolling is engaged.',
-      group: 'settings'
-    },
-    {
-      title: 'Use Galleries',
-      name: 'useGallery',
-      type: 'string',
-      description:
-        'Display an inline gallery instead of thumbnails for this product on Collection pages',
-      options: {
-        list: [
-          { title: 'Yes', value: 'true' },
-          { title: 'No', value: 'false' }
-        ]
-      },
-      fieldset: 'cards',
-      group: 'settings'
-    },
-    {
-      title: 'Surface Option',
-      name: 'surfaceOption',
-      type: 'string',
-      description:
-        'Surface one of the product options for this product on Collection pages',
-      options: {
-        list: [{ title: 'None', value: '' }],
-        from: 'options',
-        fromData: { title: 'name', value: 'position' }
-      },
-      fieldset: 'cards',
-      group: 'settings'
+        'Define a Gallery for your product, or for a subset of variants'
     },
     {
       title: 'Options Settings',
       name: 'optionSettings',
       type: 'array',
       of: [{ type: 'productOptionSettings' }],
-      description: 'Define additional settings for product options',
-      group: 'settings'
+      description: 'Define additional settings for product options'
     },
     {
       title: 'Filters',
@@ -104,14 +148,17 @@ export default {
               to: [{ type: 'filter' }]
             },
             {
-              title: 'Which option is this for?',
+              title: 'Wich option is this for?',
               name: 'forOption',
               type: 'string',
               options: {
                 list: [{ title: 'All', value: '' }],
-                from: 'options',
-                fromData: { title: 'name' },
-                joinWith: 'values'
+                fromField: 'options',
+                fromSubField: 'values',
+                fromFieldData: {
+                  title: 'name',
+                  value: 'position'
+                }
               }
             }
           ],
@@ -141,36 +188,58 @@ export default {
       options: {
         editModal: 'popover'
       },
-      validation: Rule => Rule.unique(),
-      group: 'settings'
+      validation: Rule => Rule.unique()
     },
     {
-      title: 'Gallery',
-      name: 'galleryPhotos',
-      type: 'array',
-      of: [{ type: 'productGalleryPhotos' }],
+      title: 'Use Galleries',
+      name: 'useGallery',
+      type: 'string',
       description:
-        'Define a Gallery for your product, or for a subset of variants',
-      group: 'photos'
+        'Display an inline gallery instead of thumbnails for this product on Collection pages',
+      options: {
+        list: [
+          { title: 'Yes', value: 'true' },
+          { title: 'No', value: 'false' }
+        ]
+      },
+      fieldset: 'cards'
+    },
+    {
+      title: 'Surface Option',
+      name: 'surfaceOption',
+      type: 'string',
+      description:
+        'Surface one of the product options for this product on Collection pages',
+      options: {
+        list: [{ title: 'None', value: '' }],
+        fromField: 'options',
+        fromFieldData: { title: 'name', value: 'position' }
+      },
+      fieldset: 'cards'
     },
     {
       title: 'Listing Thumbnails',
       name: 'listingPhotos',
       type: 'array',
       of: [{ type: 'productListingPhotos' }],
-      fieldset: 'cards',
-      group: 'photos'
+      fieldset: 'cards'
     },
     {
       title: 'Cart Thumbnails',
       name: 'cartPhotos',
       type: 'array',
       of: [{ type: 'productCartPhotos' }],
-      fieldset: 'cards',
-      group: 'photos'
+      fieldset: 'cards'
     },
     {
-      title: 'Page Content',
+      title: 'Overlay header with transparency?',
+      name: 'hasTransparentHeader',
+      type: 'boolean',
+      description:
+        'When activated the header will overlay the first content module with a transparent background and white text until scrolling is engaged.'
+    },
+    {
+      title: 'Page Modules',
       name: 'modules',
       type: 'array',
       of: [
@@ -198,14 +267,12 @@ export default {
                 message: 'You must have one "Product Hero" module on the page',
                 paths: productHeroItems
               }
-        }),
-      group: 'content'
+        })
     },
     {
       title: 'SEO / Share Settings',
       name: 'seo',
-      type: 'seo',
-      group: 'settings'
+      type: 'seo'
     }
   ],
   initialValue: {
@@ -225,7 +292,6 @@ export default {
   },
   preview: {
     select: {
-      store: 'store',
       isDraft: 'isDraft',
       wasDeleted: 'wasDeleted',
       title: 'title',
@@ -235,21 +301,21 @@ export default {
       listingPhoto: 'listingPhoto'
     },
     prepare({
-      store,
       isDraft = false,
       wasDeleted = false,
       title,
+      productTitle,
       slug = {},
       cartPhotos
     }) {
-      const path = `/products/${slug.current ?? store.slug?.current}`
+      const path = `/products/${slug.current}`
       return {
         title:
-          (title ? title : store.title) +
+          (title ? title : productTitle) +
           (wasDeleted ? ' (removed)' : '') +
           (isDraft ? ' (draft)' : ''),
         media: cartPhotos?.length ? cartPhotos[0].cartPhoto : null,
-        subtitle: path
+        subtitle: slug.current ? path : '(missing slug)'
       }
     }
   }

@@ -1,8 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import './skin.css?raw'
-
 const Logo = ({ projectName }) => {
   return (
     <Icon isLogin={projectName}>
@@ -26,7 +24,7 @@ const Icon = styled.div`
   width: auto;
   height: 2em;
   max-width: 100%;
-  margin: -0.75rem auto;
+  margin: -1em auto;
   color: white;
 
   ${props =>
@@ -34,14 +32,14 @@ const Icon = styled.div`
     css`
       display: block;
       margin: 0 auto;
-      height: 4rem;
+      height: 4em;
       color: black;
     `}
 
   svg {
     display: block;
     margin: 0 auto;
-    height: 100% !important;
+    height: 100%;
     width: auto;
     fill: currentColor;
   }
