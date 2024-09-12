@@ -1,35 +1,24 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 
-import Grid from './grid'
-import Hero from './hero'
-import Marquee from './marquee'
-import DividerPhoto from './divider-photo'
-import ProductHero from './product-hero'
-import Collection from './collection-grid'
+const Grid = dynamic(() => import('./grid'))
+const Hero = dynamic(() => import('./hero'))
+const Marquee = dynamic(() => import('./marquee'))
+const DividerPhoto = dynamic(() => import('./divider-photo'))
 
-export const Module = ({
-  index,
-  data,
-  product,
-  activeVariant,
-  onVariantChange,
-}) => {
-  const ModuleType = {
-    grid: Grid,
-    hero: Hero,
-    marquee: Marquee,
-    dividerPhoto: DividerPhoto,
-    productHero: ProductHero,
-    collectionGrid: Collection,
-  }[data?._type] ?? <></>
+export const Module = ({ module }) => {
+  const type = module._type
 
-  return (
-    <ModuleType
-      index={index}
-      data={data}
-      product={product}
-      activeVariant={activeVariant}
-      onVariantChange={onVariantChange}
-    />
-  )
+  switch (type) {
+    case 'grid':
+      return <Grid data={module} />
+    case 'hero':
+      return <Hero data={module} />
+    case 'marquee':
+      return <Marquee data={module} />
+    case 'dividerPhoto':
+      return <DividerPhoto data={module} />
+    default:
+      return null
+  }
 }

@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import Router from 'next/router'
+import Head from 'next/head'
 import { ThemeProvider } from 'next-themes'
 import { LazyMotion, domAnimation, AnimatePresence } from 'framer-motion'
 
@@ -14,8 +15,6 @@ import {
   useSiteContext,
   useTogglePageTransition,
 } from '@lib/context'
-
-import Cart from '@components/cart'
 
 // Console Credits
 if (isBrowser) {
@@ -86,20 +85,21 @@ const Site = ({ Component, pageProps, router }) => {
     }
   }, [])
 
-  const pageID = useMemo(() => data?.page?.id, [data])
-
   return (
     <LazyMotion features={domAnimation}>
+      {isPageTransition && (
+        <Head>
+          <title>Loading...</title>
+        </Head>
+      )}
       <AnimatePresence
-        mode="wait"
+        exitBeforeEnter
         onExitComplete={() => {
           document.body.classList.remove('overflow-hidden')
         }}
       >
-        <Component key={pageID} {...pageProps} />
+        <Component key={router.asPath.split('?')[0]} {...pageProps} />
       </AnimatePresence>
-
-      <Cart data={{ ...data?.site }} />
     </LazyMotion>
   )
 }

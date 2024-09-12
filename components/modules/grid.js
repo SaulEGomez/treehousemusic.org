@@ -1,7 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
 
-import ProductCard from '@components/product-card'
 import Freeform from '@components/freeform'
 import AccordionList from '@components/accordion-list'
 
@@ -39,7 +38,7 @@ const Grid = ({ data = {} }) => {
     <section className="section">
       <div className="section--content">
         <div
-          className={`grid grid-cols-${size} gap-x-16 gap-y-16 sm:gap-x-32 lg:gap-x-48`}
+          className={`grid grid-cols-${size} gap-x-4 gap-y-4 sm:gap-x-8 lg:gap-x-12 lg:gap-y-6`}
         >
           {columns.map((col, key) => {
             const { sizes, blocks } = col
@@ -79,16 +78,6 @@ const GridBlock = ({ block }) => {
       return <Freeform data={block} />
     case 'accordions':
       return <AccordionList data={block} />
-    case 'productCard':
-      return (
-        <ProductCard
-          className="is-inline"
-          product={block.product}
-          hasVisuals
-          showThumbs
-          showPrice
-        />
-      )
     default:
       return null
   }
