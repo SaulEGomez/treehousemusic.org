@@ -48,11 +48,6 @@ export default {
         { type: 'hero' },
         { type: 'marquee' },
         { type: 'dividerPhoto' },
-        {
-          title: 'Reusable Section',
-          type: 'reference',
-          to: [{ type: 'section' }]
-        }
       ],
       group: 'content'
     },
@@ -77,3 +72,5 @@ export default {
     }
   }
 }
+
+// Test 
