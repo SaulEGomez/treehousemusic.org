@@ -8,6 +8,7 @@ import productVariant from './documents/shopify-variant'
 import collection from './documents/shopify-collection'
 import filter from './documents/filter'
 import solidColor from './documents/color'
+import section from './documents/section'
 
 import generalSettings from './documents/settings-general'
 import cookieSettings from './documents/settings-cookie'
@@ -75,6 +76,7 @@ export default createSchema({
     collection,
     filter,
     solidColor,
+    section,
 
     generalSettings,
     cookieSettings,
